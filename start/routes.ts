@@ -6,4 +6,10 @@ Route.get('/', async () => {
 
 Route.group(() => {
     Route.post('/', 'UsersController.create')
+    Route.post('/auth', 'UsersController.auth')
 }).prefix('user')
+
+Route.group(() => {
+    Route.post('/', 'TeamsController.create')
+    Route.get('/', 'TeamsController.index')
+}).prefix('team').middleware('auth')

@@ -4,7 +4,10 @@ import {
     column,
     beforeSave,
     BaseModel,
+    hasMany, HasMany
 } from '@ioc:Adonis/Lucid/Orm'
+
+import Team from 'App/Models/Team'
 
 export default class User extends BaseModel {
     @column({ isPrimary: true })
@@ -18,6 +21,10 @@ export default class User extends BaseModel {
 
     @column({ serializeAs: null })
     public password: string
+
+    @hasMany(() => Team, { localKey: 'id', foreignKey: 'user_id' })
+    public teams: HasMany<typeof Team>
+
 
     @column()
     public rememberMeToken?: string

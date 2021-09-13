@@ -9,6 +9,6 @@ services:
             POSTGRES_PASSWORD: ${PG_PASSWORD}
             POSTGRES_DB: ${PG_DB_NAME}
         volumes:
-            - ./.docker/postgresql/data:/var/lib/postgresql/data
+            - ~/Docker/pokemon/postgresql/data:/var/lib/postgresql/data
         ports:
             - ${PG_PORT}:5432

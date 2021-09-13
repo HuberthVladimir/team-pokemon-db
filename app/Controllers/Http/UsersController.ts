@@ -8,7 +8,8 @@ export default class UsersController {
         try {
             const user = await User.create(data)
             return response.status(200).json(user)
-        } catch {
+        } catch (err) {
+            console.log(err)
             return response.status(400).json({ message: 'Não foi possivel criar usuario' })
         }
     }
@@ -17,7 +18,8 @@ export default class UsersController {
         const { email, password } = await request.validate(authUser)
         try {
             const userAuth = await auth.attempt(email, password)
-            return response.status(200).json(userAuth)
+            const user = await User.query().where('email', email).preload('teams', teams => teams.preload('pokemons'))
+            return response.status(200).json({ token: userAuth, user })
         } catch {
             return response.status(400).json({ message: 'Verifique se seus dados estão corretos' })
         }
